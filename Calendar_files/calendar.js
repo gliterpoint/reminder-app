@@ -1101,13 +1101,13 @@ $(document).ready(function () {
     });
   }
   else {
-    window.location.replace("../login.html");
+    window.location.replace("../index.html");
   }
   $("#logout").click(() => {
     localStorage.removeItem('token')
     localStorage.removeItem('daily')
     localStorage.removeItem('monthly')
     localStorage.removeItem('weekly')
-    window.location.replace('../login.html')
+    window.location.replace('../index.html')
   })
 });

@@ -24,7 +24,7 @@ function loginApi() {
             success: function (res) {
                 if (res?.token) {
                     localStorage.setItem("token", res.token);
-                    window.location.replace("../index.html");
+                    window.location.replace("../main.html");
                 }
             },
             error: function (xhr, ajaxOptions, error) {
