@@ -82,6 +82,20 @@ function addEvent(e) {
         taskHoures: $("#taskHoures").val(),
         eventColor: $("#colorful").val(),
       };
+      $.ajax({
+        url: "https://reminderapp-be-production.up.railway.app/api/event/newEvent",
+        contentType: "application/json",
+        type: "POST",
+        data: JSON.stringify(newEvent),
+        processData: false,
+        headers: { 'x-access-token': localStorage.getItem('token') },
+        success: function (res) {
+          alert(res.message)
+        },
+        error: function (xhr, ajaxOptions, error) {
+          alert(xhr.responseJSON?.message);
+        }
+      });
       localMemoryAPI.createObject("daily");
       var list = localMemoryAPI.getAll("daily");
       list[list.length] = newEvent;

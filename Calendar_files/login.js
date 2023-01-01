@@ -5,48 +5,66 @@ $(document).ready(function () {
 });
 function loginApi() {
     console.log("in login")
-    const username = document
-        .getElementById("username")
+    const email = document
+        .getElementById("email")
         .value.toLowerCase()
         .trim();
     const password = document.getElementById("password").value;
-    if (username == "") {
+    if (email == "") {
         alert("No username entered");
     } else if (password == "") {
         alert("No password entered");
     } else {
         $.ajax({
-            url: "http://localhost:4000/api/auth/login",
+            url: "https://reminderapp-be-production.up.railway.app/api/auth/login",
+            contentType: "application/json; charset=utf-8",
             type: "POST",
-            data: { email: username, password },
+            data: JSON.stringify({ "email": email, "password": password }),
             processData: false,
-            success: function (msg) {
-                alert("Login Success");
+            success: function (res) {
+                if (res?.token) {
+                    localStorage.setItem("token", res.token);
+                    window.location.replace("../index.html");
+                }
             },
+            error: function (xhr, ajaxOptions, error) {
+                alert(xhr.responseJSON?.message);
+            }
         });
     }
 }
 
 function signupApi() {
     console.log("in signup")
-    const username = document
-        .getElementById("username")
+    const email = document
+        .getElementById("email")
+        .value.toLowerCase()
+        .trim();
+    const name = document
+        .getElementById("name")
         .value.toLowerCase()
         .trim();
     const password = document.getElementById("password").value;
-    if (username == "") {
-        alert("No username entered");
+    if (email == "") {
+        alert("No Email entered");
     } else if (password == "") {
-        alert("No password entered");
+        alert("No Password entered");
+    } else if (name == "") {
+        alert("No Name entered");
     } else {
         $.ajax({
-            url: "http://localhost:4000/api/auth/signup",
+            url: "https://reminderapp-be-production.up.railway.app/api/auth/signup",
             type: "POST",
-            data: { email: username, password },
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify({ "email": email, "password": password, "name": name }),
             processData: false,
             success: function (msg) {
                 alert("Signup Success");
+                signupTextChange()
             },
+            error: function (xhr) {
+                alert(xhr.responseJSON?.message);
+            }
         });
     }
 }
@@ -67,10 +85,12 @@ function signupTextChange() {
     }
     if (buttonText.innerHTML.toLocaleLowerCase() == 'sign in') {
         buttonText.innerHTML = 'Sign Up'
+        $("#name").show();
         $("#button").unbind();
         $("#button").click(signupApi)
     } else {
         buttonText.innerHTML = 'Sign In'
+        $("#name").hide();
         $("#button").unbind();
         $("#button").click(loginApi)
     }

@@ -103,7 +103,7 @@
     if (tooltipElm) {
       tooltipTop =
         tooltipTop - scrollY + tooltipElm.offsetHeight + 20 >=
-        window.innerHeight
+          window.innerHeight
           ? tooltipTop - tooltipElm.offsetHeight - 20
           : tooltipTop;
       tooltipLeft =

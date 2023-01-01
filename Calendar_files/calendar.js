@@ -61,8 +61,8 @@ var calendar = (function () {
       } else displayDate.month++;
       $("#displayMonth").html(
         dateLib.months(displayDate.year)[displayDate.month].name +
-          "<br>" +
-          displayDate.year
+        "<br>" +
+        displayDate.year
       );
       fillMonth(displayDate);
       $("#dayHeader").empty();
@@ -79,8 +79,8 @@ var calendar = (function () {
       } else displayDate.month--;
       $("#displayMonth").html(
         dateLib.months(displayDate.year)[displayDate.month].name +
-          "<br>" +
-          displayDate.year
+        "<br>" +
+        displayDate.year
       );
       fillMonth(displayDate);
       $("#dayHeader").empty();
@@ -98,7 +98,7 @@ var calendar = (function () {
     var size = table.length == 35 ? 5 : 6;
     var month = "";
     var j = 0;
-    for (var i = 0; i < table.length; ) {
+    for (var i = 0; i < table.length;) {
       month += "<div class = 'monthWeek'>";
       for (var k = 0; k < 7; k++, i++) {
         month +=
@@ -107,8 +107,8 @@ var calendar = (function () {
           ">" +
           (table[i].day == 1
             ? "<div class = 'dNum'>" +
-              (table[i].month + " " + table[i].day) +
-              "</div>"
+            (table[i].month + " " + table[i].day) +
+            "</div>"
             : "<div class = 'dNum'>" + table[i].day + "</div>") +
           "<table class = 'eventField'></table>" +
           "</div>";
@@ -284,12 +284,12 @@ var calendar = (function () {
       for (var i = 0; i < pressed.length; i++) {
         temp = $(
           "<tr><td id = '" +
-            $(pressed[i]).attr("id") +
-            "'><div>" +
-            $(pressed[i]).text() +
-            "</td></tr><tr><td id = '" +
-            $(pressed[i]).attr("id") +
-            "' class = 'event-description'></div></td></tr>"
+          $(pressed[i]).attr("id") +
+          "'><div>" +
+          $(pressed[i]).text() +
+          "</td></tr><tr><td id = '" +
+          $(pressed[i]).attr("id") +
+          "' class = 'event-description'></div></td></tr>"
         );
         $("#eventInTD").children("table").append(temp);
         temp.css({ backgroundColor: $(pressed[i]).css("backgroundColor") });
@@ -306,30 +306,31 @@ var calendar = (function () {
           }
           var hitEvent =
             eventList[
-              $(target)
-                .attr("id")
-                .replace(/[^\d.]/g, "")
+            $(target)
+              .attr("id")
+              .replace(/[^\d.]/g, "")
             ];
+
           target.append(
             "<div><div id = 'date'><div id = 'from'>From: " +
-              hitEvent.startDate.day +
-              "/" +
-              hitEvent.startDate.month +
-              "/" +
-              hitEvent.startDate.year +
-              "<br> Start: " +
-              hitEvent.startTime +
-              "</div><div id = 'to'> To: " +
-              +hitEvent.endDate.day +
-              "/" +
-              hitEvent.endDate.month +
-              "/" +
-              hitEvent.endDate.year +
-              "<br> End: " +
-              hitEvent.endTime +
-              "</div></div><br><br>" +
-              hitEvent.description +
-              "<br><br><div><button id = 'edit'>Edit</button><button id = 'remove'>Remove</button></div></div>"
+            hitEvent.startDate.day +
+            "/" +
+            hitEvent.startDate.month +
+            "/" +
+            hitEvent.startDate.year +
+            "<br> Start: " +
+            hitEvent.startTime +
+            "</div><div id = 'to'> To: " +
+            +hitEvent.endDate.day +
+            "/" +
+            hitEvent.endDate.month +
+            "/" +
+            hitEvent.endDate.year +
+            "<br> End: " +
+            hitEvent.endTime +
+            "</div></div><br><br>" +
+            hitEvent.description +
+            `<br><br><div><button id = 'edit'>Edit</button><button data-id='${hitEvent._id}' id = 'remove'>Remove</button></div></div>`
           );
           target.find("#from").css({
             "font-size": target.children().width() * dFontScale + "px",
@@ -347,9 +348,23 @@ var calendar = (function () {
 
           //click function to remove event from calendar
           target.find("#remove").click(function (e) {
-            if (confirm("Ar you sure you want to remove this event?")) {
+            if (confirm("Are you sure you want to remove this event?")) {
               var type = hitEvent.type;
               hitEvent.title = null;
+              console.log(hitEvent)
+              $.ajax({
+                url: `https://reminderapp-be-production.up.railway.app/api/event/deleteEvent/${hitEvent._id}`,
+                contentType: "application/json",
+                type: "delete",
+                processData: false,
+                headers: { 'x-access-token': localStorage.getItem('token') },
+                success: function (res) {
+                  alert(res.message)
+                },
+                error: function (xhr, ajaxOptions, error) {
+                  console.log(xhr.responseJSON?.message);
+                }
+              });
               localMemoryAPI.save(type, allEvent[type]);
               fillMonth(displayDate);
               cancel(null);
@@ -372,29 +387,29 @@ var calendar = (function () {
                 $("#description").val(hitEvent.description);
                 $("#beginD").val(
                   hitEvent.startDate.year +
-                    "-" +
-                    (hitEvent.startDate.month < 10
-                      ? "0" + hitEvent.startDate.month
-                      : hitEvent.startDate.month) +
-                    "-" +
-                    (hitEvent.startDate.day < 10
-                      ? "0" + hitEvent.startDate.day
-                      : hitEvent.startDate.day) +
-                    "T" +
-                    hitEvent.startTime
+                  "-" +
+                  (hitEvent.startDate.month < 10
+                    ? "0" + hitEvent.startDate.month
+                    : hitEvent.startDate.month) +
+                  "-" +
+                  (hitEvent.startDate.day < 10
+                    ? "0" + hitEvent.startDate.day
+                    : hitEvent.startDate.day) +
+                  "T" +
+                  hitEvent.startTime
                 );
                 $("#endD").val(
                   hitEvent.endDate.year +
-                    "-" +
-                    (hitEvent.endDate.month < 10
-                      ? "0" + hitEvent.endDate.month
-                      : hitEvent.endDate.month) +
-                    "-" +
-                    (hitEvent.endDate.day < 10
-                      ? "0" + hitEvent.endDate.day
-                      : hitEvent.endDate.day) +
-                    "T" +
-                    hitEvent.endTime
+                  "-" +
+                  (hitEvent.endDate.month < 10
+                    ? "0" + hitEvent.endDate.month
+                    : hitEvent.endDate.month) +
+                  "-" +
+                  (hitEvent.endDate.day < 10
+                    ? "0" + hitEvent.endDate.day
+                    : hitEvent.endDate.day) +
+                  "T" +
+                  hitEvent.endTime
                 );
                 $("#colorful").val(hitEvent.eventColor);
                 break;
@@ -410,16 +425,16 @@ var calendar = (function () {
                 $("#description").val(hitEvent.description);
                 $("#beginD").val(
                   hitEvent.startDate.year +
-                    "-" +
-                    (hitEvent.startDate.month < 10
-                      ? "0" + hitEvent.startDate.month
-                      : hitEvent.startDate.month) +
-                    "-" +
-                    (hitEvent.startDate.day < 10
-                      ? "0" + hitEvent.startDate.day
-                      : hitEvent.startDate.day) +
-                    "T" +
-                    hitEvent.startTime
+                  "-" +
+                  (hitEvent.startDate.month < 10
+                    ? "0" + hitEvent.startDate.month
+                    : hitEvent.startDate.month) +
+                  "-" +
+                  (hitEvent.startDate.day < 10
+                    ? "0" + hitEvent.startDate.day
+                    : hitEvent.startDate.day) +
+                  "T" +
+                  hitEvent.startTime
                 );
                 $("#colorful").val(hitEvent.eventColor);
                 $("#numrepeat").val(hitEvent.duration);
@@ -563,19 +578,19 @@ var calendar = (function () {
         $("#switch_daily").trigger("click");
         $("#beginD").val(
           clickedYear +
-            "-" +
-            (clickedMonth < 10 ? "0" + clickedMonth : clickedMonth) +
-            "-" +
-            (clickedDay < 10 ? "0" + clickedDay : clickedDay) +
-            "T06:00"
+          "-" +
+          (clickedMonth < 10 ? "0" + clickedMonth : clickedMonth) +
+          "-" +
+          (clickedDay < 10 ? "0" + clickedDay : clickedDay) +
+          "T06:00"
         );
         $("#endD").val(
           clickedYear +
-            "-" +
-            (clickedMonth < 10 ? "0" + clickedMonth : clickedMonth) +
-            "-" +
-            (clickedDay < 10 ? "0" + clickedDay : clickedDay) +
-            "T07:00"
+          "-" +
+          (clickedMonth < 10 ? "0" + clickedMonth : clickedMonth) +
+          "-" +
+          (clickedDay < 10 ? "0" + clickedDay : clickedDay) +
+          "T07:00"
         );
       }
       $("#eventHandler").show();
@@ -645,9 +660,9 @@ var calendar = (function () {
           (displayDate.month == 1
             ? displayDate.year - 1 + "12"
             : displayDate.year +
-              (displayDate.month - 1 < 10
-                ? "0" + (displayDate.month - 1)
-                : displayDate.month - 1)) +
+            (displayDate.month - 1 < 10
+              ? "0" + (displayDate.month - 1)
+              : displayDate.month - 1)) +
           (table[j].day < 10 ? "0" + table[j].day : table[j].day);
       } else {
         if (table[j].type == "NMday") {
@@ -656,9 +671,9 @@ var calendar = (function () {
             (displayDate.month == 12
               ? displayDate.year + 1 + "01"
               : displayDate.year +
-                (displayDate.month + 1 < 10
-                  ? "0" + (displayDate.month + 1)
-                  : displayDate.month + 1)) +
+              (displayDate.month + 1 < 10
+                ? "0" + (displayDate.month + 1)
+                : displayDate.month + 1)) +
             (table[j].day < 10 ? "0" + table[j].day : table[j].day);
         } else {
           day =
@@ -677,14 +692,14 @@ var calendar = (function () {
               temp = $($(".eventField")[j])
                 .append(
                   "<tr><td id = 'eventN" +
-                    i +
-                    "'><div class = 'tdSizeMonth' data-tooltip = \"{'color' : '" +
-                    eventList[i].eventColor +
-                    "'}\" title = '" +
-                    eventList[i].title +
-                    "' >" +
-                    eventList[i].title +
-                    "</div></td></tr>"
+                  i +
+                  "'><div class = 'tdSizeMonth' data-tooltip = \"{'color' : '" +
+                  eventList[i].eventColor +
+                  "'}\" title = '" +
+                  eventList[i].title +
+                  "' >" +
+                  eventList[i].title +
+                  "</div></td></tr>"
                 )
                 .find("#eventN" + i)
                 .css({ backgroundColor: eventList[i].eventColor });
@@ -698,24 +713,24 @@ var calendar = (function () {
             if (inDay(day, day, eventList[i].startDate, eventList[i].endDate))
               if (
                 eventList[i].weekDay[
-                  dateLib.dayOfWeek(
-                    parseInt(day.slice(0, 4)),
-                    parseInt(day.slice(4, 6)),
-                    parseInt(day.slice(6, 8))
-                  ) - 1
+                dateLib.dayOfWeek(
+                  parseInt(day.slice(0, 4)),
+                  parseInt(day.slice(4, 6)),
+                  parseInt(day.slice(6, 8))
+                ) - 1
                 ]
               ) {
                 temp = $($(".eventField")[j])
                   .append(
                     "<tr><td id = 'eventN" +
-                      i +
-                      "'><div class = 'tdSizeMonth' data-tooltip = \"{'color' : '" +
-                      eventList[i].eventColor +
-                      "'}\" title = '" +
-                      eventList[i].title +
-                      "' >" +
-                      eventList[i].title +
-                      "</div></td></tr>"
+                    i +
+                    "'><div class = 'tdSizeMonth' data-tooltip = \"{'color' : '" +
+                    eventList[i].eventColor +
+                    "'}\" title = '" +
+                    eventList[i].title +
+                    "' >" +
+                    eventList[i].title +
+                    "</div></td></tr>"
                   )
                   .find("#eventN" + i)
                   .css({ backgroundColor: eventList[i].eventColor });
@@ -729,24 +744,24 @@ var calendar = (function () {
             if (inDay(day, day, eventList[i].startDate, eventList[i].endDate))
               if (
                 eventList[i].weekDay[
-                  dateLib.dayOfWeek(
-                    parseInt(day.slice(0, 4)),
-                    parseInt(day.slice(4, 6)),
-                    parseInt(day.slice(6, 8))
-                  ) - 1
+                dateLib.dayOfWeek(
+                  parseInt(day.slice(0, 4)),
+                  parseInt(day.slice(4, 6)),
+                  parseInt(day.slice(6, 8))
+                ) - 1
                 ]
               ) {
                 temp = $($(".eventField")[j])
                   .append(
                     "<tr><td id = 'eventN" +
-                      i +
-                      "'><div class = 'tdSizeMonth' data-tooltip = \"{'color' : '" +
-                      eventList[i].eventColor +
-                      "'}\"  title = '" +
-                      eventList[i].title +
-                      "' >" +
-                      eventList[i].title +
-                      "</div></td></tr>"
+                    i +
+                    "'><div class = 'tdSizeMonth' data-tooltip = \"{'color' : '" +
+                    eventList[i].eventColor +
+                    "'}\"  title = '" +
+                    eventList[i].title +
+                    "' >" +
+                    eventList[i].title +
+                    "</div></td></tr>"
                   )
                   .find("#eventN" + i)
                   .css({ backgroundColor: eventList[i].eventColor });
@@ -1034,20 +1049,20 @@ function sideBarResize() {
 
 //thios function will check if event is in the month dates range and if event is in the day
 function inDay(startMdate, endMdate, startE, endE) {
-  var startEdate =
+  var startDate =
     "" +
     startE.year +
     (startE.month < 10 ? "0" + startE.month : startE.month) +
     (startE.day < 10 ? "0" + startE.day : startE.day);
-  var endEdate =
+  var endDate =
     "" +
     endE.year +
     (endE.month < 10 ? "0" + endE.month : endE.month) +
     (endE.day < 10 ? "0" + endE.day : endE.day);
 
   if (
-    startEdate.localeCompare(endMdate) != 1 &&
-    endEdate.localeCompare(startMdate) != -1
+    startDate.localeCompare(endMdate) != 1 &&
+    endDate.localeCompare(startMdate) != -1
   )
     return true;
   false;
@@ -1055,4 +1070,44 @@ function inDay(startMdate, endMdate, startE, endE) {
 
 $(document).ready(function () {
   calendar.initModule($("#calendar"));
+  const token = localStorage.getItem('token')
+  if (token) {
+    localStorage.removeItem('daily')
+    localStorage.removeItem('monthly')
+    localStorage.removeItem('weekly')
+    $.ajax({
+      url: "https://reminderapp-be-production.up.railway.app/api/event/events",
+      contentType: "application/json",
+      type: "get",
+      processData: false,
+      headers: { 'x-access-token': token },
+      success: function (res) {
+        const data = res.data
+        data.forEach(item => {
+          let type = item.type;
+          let localData = localStorage.getItem(type)
+          if (localData) {
+            localStorage.removeItem(type)
+            localStorage.setItem(type, JSON.stringify([...JSON.parse(localData), item]))
+          }
+          else {
+            localStorage.setItem(type, JSON.stringify([{ ...item }]))
+          }
+        })
+      },
+      error: function (xhr, ajaxOptions, error) {
+        console.log(xhr.responseJSON?.message);
+      }
+    });
+  }
+  else {
+    window.location.replace("../login.html");
+  }
+  $("#logout").click(() => {
+    localStorage.removeItem('token')
+    localStorage.removeItem('daily')
+    localStorage.removeItem('monthly')
+    localStorage.removeItem('weekly')
+    window.location.replace('../login.html')
+  })
 });
