@@ -68,7 +68,7 @@ function addEvent(e) {
         return;
       }
       if (!$("#beginD").val().localeCompare($("#endD").val())) {
-        alert("End Date cant be befor Start Date");
+        alert("End Date cant be before Start Date");
         return;
       }
       newEvent = {
@@ -82,7 +82,6 @@ function addEvent(e) {
         taskHoures: $("#taskHoures").val(),
         eventColor: $("#colorful").val(),
       };
-
       localMemoryAPI.createObject("daily");
       var list = localMemoryAPI.getAll("daily");
       list[list.length] = newEvent;
@@ -156,6 +155,7 @@ function addEvent(e) {
       localMemoryAPI.save("monthly", list);
       break;
   }
+
   cancel(null);
   calendar.fillMonth(calendar.displayDate);
 }
@@ -187,108 +187,108 @@ function eventType(e) {
     case "switch_weekly":
       $("#repeat").append(
         "<div id = 'weekly' class = 'pickday'>" +
-          "<input type = 'datetime-local' id = 'beginD' class = 'date' required >" +
-          "<br>" +
-          "<br>" +
-          "<div class = 'weekBoxs'>" +
-          "<label for = 'sun'>S</label>" +
-          "<br>" +
-          "<input type='checkbox' class = 'check' id = 'sun'>" +
-          "</div>" +
-          "<div class = 'weekBoxs'>" +
-          "<label for = 'mon'>M</label>" +
-          "<br>" +
-          "<input type='checkbox' class = 'check' id = 'mon'>" +
-          "</div>" +
-          "<div class = 'weekBoxs'>" +
-          "<label for = 'tue'>T</label>" +
-          "<br>" +
-          "<input type='checkbox' class = 'check' id = 'tue'>" +
-          "</div>" +
-          "<div class = 'weekBoxs'>" +
-          "<label for = 'wen'>W</label>" +
-          "<br>" +
-          "<input type='checkbox' class = 'check' id = 'wen'>" +
-          "</div>" +
-          "<div class = 'weekBoxs'>" +
-          "<label for = 'thu'>T</label>" +
-          "<br>" +
-          "<input type='checkbox' class = 'check' id = 'thu'>" +
-          "</div>" +
-          "<div class = 'weekBoxs'>" +
-          "<label for = 'fri'>F</label>" +
-          "<br>" +
-          "<input type='checkbox' class = 'check' id = 'fri'>" +
-          "</div>" +
-          "<div class = 'weekBoxs'>" +
-          "<label for = 'sat'>S</label>" +
-          "<br>" +
-          "<input type='checkbox' class = 'check' id = 'sat'>" +
-          "</div>" +
-          "<br>" +
-          "<br>" +
-          "<div class = 'addion'>" +
-          "<label for = 'quantity'></lable>" +
-          "<input id = 'numrepeat' class = 'numrepeat' type='number' placeholder='Repeat' name='quantity'>" +
-          "<input id = 'colorful' type='color' value = '#ff0000' name='favcolor'>" +
-          "</div>" +
-          "<button  id = 'ok' class='action ok'>Ok</button>" +
-          "<button  id = 'cancel' class='action cancel'>Cancel</button>" +
-          "</div>"
+        "<input type = 'datetime-local' id = 'beginD' class = 'date' required >" +
+        "<br>" +
+        "<br>" +
+        "<div class = 'weekBoxs'>" +
+        "<label for = 'sun'>S</label>" +
+        "<br>" +
+        "<input type='checkbox' class = 'check' id = 'sun'>" +
+        "</div>" +
+        "<div class = 'weekBoxs'>" +
+        "<label for = 'mon'>M</label>" +
+        "<br>" +
+        "<input type='checkbox' class = 'check' id = 'mon'>" +
+        "</div>" +
+        "<div class = 'weekBoxs'>" +
+        "<label for = 'tue'>T</label>" +
+        "<br>" +
+        "<input type='checkbox' class = 'check' id = 'tue'>" +
+        "</div>" +
+        "<div class = 'weekBoxs'>" +
+        "<label for = 'wen'>W</label>" +
+        "<br>" +
+        "<input type='checkbox' class = 'check' id = 'wen'>" +
+        "</div>" +
+        "<div class = 'weekBoxs'>" +
+        "<label for = 'thu'>T</label>" +
+        "<br>" +
+        "<input type='checkbox' class = 'check' id = 'thu'>" +
+        "</div>" +
+        "<div class = 'weekBoxs'>" +
+        "<label for = 'fri'>F</label>" +
+        "<br>" +
+        "<input type='checkbox' class = 'check' id = 'fri'>" +
+        "</div>" +
+        "<div class = 'weekBoxs'>" +
+        "<label for = 'sat'>S</label>" +
+        "<br>" +
+        "<input type='checkbox' class = 'check' id = 'sat'>" +
+        "</div>" +
+        "<br>" +
+        "<br>" +
+        "<div class = 'addion'>" +
+        "<label for = 'quantity'></lable>" +
+        "<input id = 'numrepeat' class = 'numrepeat' type='number' placeholder='Repeat' name='quantity'>" +
+        "<input id = 'colorful' type='color' value = '#ff0000' name='favcolor'>" +
+        "</div>" +
+        "<button  id = 'ok' class='action ok'>Ok</button>" +
+        "<button  id = 'cancel' class='action cancel'>Cancel</button>" +
+        "</div>"
       );
       break;
 
     case "switch_monthly":
       $("#repeat").append(
         "<div id = 'monthly' class = 'pickday'>" +
-          "<input type = 'datetime-local' id = 'beginD' class = 'date' required >" +
-          "<br>" +
-          "<br>" +
-          "<div class = 'weekBoxs'>" +
-          "<label for = 'sun'>S</label>" +
-          "<br>" +
-          "<input type='checkbox' class = 'check' id = 'sun'>" +
-          "</div>" +
-          "<div class = 'weekBoxs'>" +
-          "<label for = 'mon'>M</label>" +
-          "<br>" +
-          "<input type='checkbox' class = 'check' id = 'mon'>" +
-          "</div>" +
-          "<div class = 'weekBoxs'>" +
-          "<label for = 'tue'>T</label>" +
-          "<br>" +
-          "<input type='checkbox' class = 'check' id = 'tue'>" +
-          "</div>" +
-          "<div class = 'weekBoxs'>" +
-          "<label for = 'wen'>W</label>" +
-          "<br>" +
-          "<input type='checkbox' class = 'check' id = 'wen'>" +
-          "</div>" +
-          "<div class = 'weekBoxs'>" +
-          "<label for = 'thu'>T</label>" +
-          "<br>" +
-          "<input type='checkbox' class = 'check' id = 'thu'>" +
-          "</div>" +
-          "<div class = 'weekBoxs'>" +
-          "<label for = 'fri'>F</label>" +
-          "<br>" +
-          "<input type='checkbox' class = 'check' id = 'fri'>" +
-          "</div>" +
-          "<div class = 'weekBoxs'>" +
-          "<label for = 'sat'>S</label>" +
-          "<br>" +
-          "<input type='checkbox' class = 'check' id = 'sat'>" +
-          "</div>" +
-          "<br>" +
-          "<br>" +
-          "<div class = 'addion'>" +
-          "<label for = 'quantity'></lable>" +
-          "<input id = 'numrepeat' class = 'numrepeat' type='number' placeholder='Repeat' name='quantity'>" +
-          "<input id = 'colorful' type='color' value = '#ff0000' name='favcolor'>" +
-          "</div>" +
-          "<button  id = 'ok' class='action ok'>Ok</button>" +
-          "<button  id = 'cancel' class='action cancel'>Cancel</button>" +
-          "</div>"
+        "<input type = 'datetime-local' id = 'beginD' class = 'date' required >" +
+        "<br>" +
+        "<br>" +
+        "<div class = 'weekBoxs'>" +
+        "<label for = 'sun'>S</label>" +
+        "<br>" +
+        "<input type='checkbox' class = 'check' id = 'sun'>" +
+        "</div>" +
+        "<div class = 'weekBoxs'>" +
+        "<label for = 'mon'>M</label>" +
+        "<br>" +
+        "<input type='checkbox' class = 'check' id = 'mon'>" +
+        "</div>" +
+        "<div class = 'weekBoxs'>" +
+        "<label for = 'tue'>T</label>" +
+        "<br>" +
+        "<input type='checkbox' class = 'check' id = 'tue'>" +
+        "</div>" +
+        "<div class = 'weekBoxs'>" +
+        "<label for = 'wen'>W</label>" +
+        "<br>" +
+        "<input type='checkbox' class = 'check' id = 'wen'>" +
+        "</div>" +
+        "<div class = 'weekBoxs'>" +
+        "<label for = 'thu'>T</label>" +
+        "<br>" +
+        "<input type='checkbox' class = 'check' id = 'thu'>" +
+        "</div>" +
+        "<div class = 'weekBoxs'>" +
+        "<label for = 'fri'>F</label>" +
+        "<br>" +
+        "<input type='checkbox' class = 'check' id = 'fri'>" +
+        "</div>" +
+        "<div class = 'weekBoxs'>" +
+        "<label for = 'sat'>S</label>" +
+        "<br>" +
+        "<input type='checkbox' class = 'check' id = 'sat'>" +
+        "</div>" +
+        "<br>" +
+        "<br>" +
+        "<div class = 'addion'>" +
+        "<label for = 'quantity'></lable>" +
+        "<input id = 'numrepeat' class = 'numrepeat' type='number' placeholder='Repeat' name='quantity'>" +
+        "<input id = 'colorful' type='color' value = '#ff0000' name='favcolor'>" +
+        "</div>" +
+        "<button  id = 'ok' class='action ok'>Ok</button>" +
+        "<button  id = 'cancel' class='action cancel'>Cancel</button>" +
+        "</div>"
       );
 
       break;
@@ -296,18 +296,18 @@ function eventType(e) {
     default:
       $("#repeat").append(
         " <div id = 'daily' class = 'pickday'>" +
-          "<input type = 'datetime-local' id = 'beginD' class = 'date' required >" +
-          "<input type = 'datetime-local' id = 'endD' class = 'date' required >" +
-          "<input id = 'colorful' type='color' value = '#ff0000' class = 'color' name='favcolor'>" +
-          "<label for='taskHoures'>hours for task: </label>" +
-          "<input type = 'number' id = 'taskHoures' >" +
-          "<br>" +
-          "<br>" +
-          "<br>" +
-          "<br>" +
-          "<button  id = 'ok' class='action ok'>Ok</button>" +
-          "<button  id = 'cancel' class='action cancel'>Cancel</button>" +
-          "</div>"
+        "<input type = 'datetime-local' id = 'beginD' class = 'date' required >" +
+        "<input type = 'datetime-local' id = 'endD' class = 'date' required >" +
+        "<input id = 'colorful' type='color' value = '#ff0000' class = 'color' name='favcolor'>" +
+        "<label for='taskHoures'>hours for task: </label>" +
+        "<input type = 'number' id = 'taskHoures' >" +
+        "<br>" +
+        "<br>" +
+        "<br>" +
+        "<br>" +
+        "<button  id = 'ok' class='action ok'>Ok</button>" +
+        "<button  id = 'cancel' class='action cancel'>Cancel</button>" +
+        "</div>"
       );
       break;
   }
